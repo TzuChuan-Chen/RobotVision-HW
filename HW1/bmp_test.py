@@ -1,8 +1,5 @@
 #HW1 create a simple bitmap image 
 
-from email.mime import image
-
-
 file_header = bytes.fromhex('42 4D 50 00 00 00 00 00 00 00 36 00 00 00')
 
 info_header = bytes.fromhex('28 00 \
