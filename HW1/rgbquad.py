@@ -1,7 +1,6 @@
-#HW1 更改rgbquad 產生bitmap image
-from calendar import c
-from readbmp import GetBMPData
+#HW1 更改testgray.bmp的 rgbquad 產生bitmap image
 
+from readbmp import GetBMPData
 
 def image_create(color = 'error', bmp_name = 'output/test.bmp',):
     

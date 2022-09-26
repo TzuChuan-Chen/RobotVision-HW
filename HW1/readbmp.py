@@ -42,7 +42,7 @@ if __name__ == "__main__":
 
     data = GetBMPData('testgray.bmp').filedata()
     print(data.hex(' '))
-
+    print(data)
 
     #data = GetBMPData('testgray.bmp').filedata()
     #print(data.hex(' '))

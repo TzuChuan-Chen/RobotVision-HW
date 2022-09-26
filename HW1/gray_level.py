@@ -22,6 +22,3 @@ def image_create():
 
 if __name__ == "__main__":
     image_create()
-
-
-
