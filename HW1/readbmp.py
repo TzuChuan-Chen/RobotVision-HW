@@ -44,8 +44,6 @@ if __name__ == "__main__":
     print(data.hex(' '))
 
 
-
-
     #data = GetBMPData('testgray.bmp').filedata()
     #print(data.hex(' '))
 
