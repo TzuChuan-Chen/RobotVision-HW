@@ -1,39 +1,35 @@
-#HW1 read bitmap image data
+#HW1 inverse bitmap image
+from readbmp import GetBMPData
 
-class GetBMPData:
-    def __init__(self, file_name):
-        
-        self.file_header = ''
-        self.info_header = ''
-        self.image_data = ''
-        self.file_name = file_name
-        f = open(self.file_name, "rb")
-        self.bmp_data = f.read()
-        f.close()
 
-    def fileheader(self):
-        file_header = self.bmp_data[:14]
-        return file_header
+def image_create():
+    f = open('new.bmp', 'wb')
+    f.write(file_header)
+    f.close()
 
-    def fileinfo(self):
-        file_info = self.bmp_data[14:55]
-        return file_info
+    f = open('new.bmp', 'ab')
+    f.write(info_header)
+    f.close()
 
-    def filedata(self):
-        file_data = self.bmp_data[55:]
-        return file_data
+    f = open('new.bmp', 'ab')
+    rgb = image_rgb.hex()
+    new_rgb = rgb[-8:]
+    for i in range(8, len(rgb), 8):
+        new_rgb += (rgb[(-8-i):(-i)])
+    f.write(bytes.fromhex(new_rgb))
+    f.close()
+
+    f = open('new.bmp', 'ab')
+    f.write(file_data)
+    f.close()
+
 
 if __name__ == "__main__":
-    header = GetBMPData('testgray.bmp').fileheader()
-    print(header.hex(' '))
+    newbmp = GetBMPData('testgray.bmp')
+    file_header = newbmp.fileheader()
+    info_header = newbmp.fileinfo()
+    image_rgb = newbmp.rgbquad()
+    file_data = newbmp.filedata()
 
-    info = GetBMPData('testgray.bmp').fileinfo()
-    print(info.hex(' '))
+    image_create()
 
-    data = GetBMPData('testgray.bmp').filedata()
-    print(data.hex(' '))
-     
-
-
-
-    
