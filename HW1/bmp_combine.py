@@ -1,5 +1,5 @@
 #HW1 merge bk.bmp and testgray.bmp * weight
-from readbmp import GetBMPData
+from bmp_reader import GetBMPData
 
 def image_merge(weight = 1, bmp_name = 'output/test.bmp',):
 
@@ -31,5 +31,5 @@ if __name__ == "__main__":
 
     bk_bmp = GetBMPData('bk.bmp')
     bk_file_data = bk_bmp.image_data
-    image_merge(1, "output/merge.bmp")
+    image_merge(0.85, "output/combine.bmp")
     

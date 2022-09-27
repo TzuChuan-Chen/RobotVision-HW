@@ -1,6 +1,6 @@
 #HW1 更改testgray.bmp的 rgbquad 產生bitmap image
 
-from readbmp import GetBMPData
+from bmp_reader import GetBMPData
 
 def image_create(color = 'error', bmp_name = 'output/test.bmp',):
     
