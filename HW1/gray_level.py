@@ -8,7 +8,7 @@ info_header = bytes.fromhex('28 00 \
                              00 00 00 00 00 00')
 
 def image_create():
-    f = open("gray_level.bmp", "wb")
+    f = open("output/gray_level.bmp", "wb")
     f.write(file_header)
     f.write(info_header)
   

@@ -77,7 +77,7 @@ if __name__ == "__main__":
     file_header = newbmp.fileheader()
     info_header = newbmp.fileinfo()
     image_rgb = newbmp.rgbquad()
-    file_data = newbmp.filedata()
+    file_data = newbmp.imagedata()
 
     image_create("blue", "output/blue.bmp")
     image_create("green", "output/green.bmp")
