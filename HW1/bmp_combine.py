@@ -24,12 +24,12 @@ def image_merge(weight = 1, bmp_name = 'output/test.bmp',):
 
 if __name__ == "__main__":
     ori_bmp = GetBMPData('testgray.bmp')
-    file_header = ori_bmp.fileheader()
-    info_header = ori_bmp.fileinfo()
-    image_rgb = ori_bmp.rgbquad()
-    ori_file_data = ori_bmp.imagedata()
+    file_header = ori_bmp.file_header
+    info_header = ori_bmp.info_header
+    image_rgb = ori_bmp.rgb_quad
+    ori_file_data = ori_bmp.image_data
 
     bk_bmp = GetBMPData('bk.bmp')
-    bk_file_data = bk_bmp.imagedata()
+    bk_file_data = bk_bmp.image_data
     image_merge(1, "output/merge.bmp")
     

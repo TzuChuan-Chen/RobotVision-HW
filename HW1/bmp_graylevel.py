@@ -35,10 +35,10 @@ def image_create():
 
 if __name__ == "__main__":
     ori_bmp = GetBMPData('testgray.bmp')
-    file_header = ori_bmp.fileheader()
+    file_header = ori_bmp.file_header
     
     #info_header = ori_bmp.fileinfo()
     #print(info_header.hex())
-    image_rgb = ori_bmp.rgbquad()
+    image_rgb = ori_bmp.rgb_quad
     #ori_file_data = ori_bmp.filedata()
     image_create()
