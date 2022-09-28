@@ -79,3 +79,4 @@ if __name__ == "__main__":
     for i in infoheader_taglist:
         print(i + 'bytes: ' + GetBMPData('bk.bmp').infoheader(i))
    
+    print(GetBMPData("output/combine.bmp").image_data.hex(' '))
