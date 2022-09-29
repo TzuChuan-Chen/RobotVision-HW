@@ -42,6 +42,19 @@ def image_create(color = 'error', bmp_name = 'output/test.bmp',):
             f.write(bytes([0]))
         f.write(file_data)
         f.close()
+
+    elif color == 'yellow':
+        f = open(bmp_name, 'wb')
+        f.write(file_header)
+        f.write(info_header)
+
+        for j in range(256):
+            f.write(bytes([0]))
+            f.write(bytes([j]))
+            f.write(bytes([j]))
+            f.write(bytes([0]))
+        f.write(file_data)
+        f.close()
         
     elif color == 'gray':
         f = open(bmp_name, 'wb')
@@ -82,5 +95,6 @@ if __name__ == "__main__":
     image_create("blue", "output/blue.bmp")
     image_create("green", "output/green.bmp")
     image_create("red", "output/red.bmp")
+    image_create("yellow", "output/yellow.bmp")
     image_create("gray", "output/gray.bmp")
     image_create("inverse_gray", "output/inverse_gray.bmp")

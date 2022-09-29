@@ -7,7 +7,6 @@ def image_create(width, height):
     f.write(info_header)
     f.write(image_rgb)
 
-
     pad_width = width * 3
     padding_num = 1
     while pad_width % 4 != 0:
@@ -33,13 +32,5 @@ if __name__ == "__main__":
                              00 00 00 00 00 00')
 
     image_rgb = ori_bmp.rgb_quad
-    
-    #gray_level = GetBMPData('output/gray_level.bmp')
-    #print(len(gray_level.image_data[:768]))
 
-    test = b''
-    for j in range(768):
-        x = 0
-        test += x.to_bytes(1, byteorder='big')
-    #print(test)
     image_create(255, 100)
