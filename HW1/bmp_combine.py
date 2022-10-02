@@ -8,6 +8,7 @@ def image_merge(weight = 1, bmp_name = 'output/test.bmp',):
     f.write(info_header)
     f.write(image_rgb)
 
+    #將兩個image_data相加並做normalization到0~255，weight大小由使用者決定
     sum = []
     norm_sum = []
     for i in range(len(ori_file_data)):
@@ -20,8 +21,7 @@ def image_merge(weight = 1, bmp_name = 'output/test.bmp',):
     for i in range(len(sum)):
         norm_sum.append(round((sum[i] - min_sum) * 255 // (max_sum - min_sum)))
         f.write(norm_sum[i].to_bytes(1, byteorder='big'))
-    #print(norm_sum[-10].to_bytes(1, byteorder='big').hex())
-    #print(list(map(hex, norm_sum)))
+
     f.close()
 
 

@@ -2,11 +2,13 @@
 from bmp_reader import GetBMPData
 
 def image_create(width, height):
+    #依序寫入file_header info_header image_rgb
     f = open("output/gray_level.bmp", "wb")
     f.write(file_header)
     f.write(info_header)
     f.write(image_rgb)
 
+    #製作灰階漸進圖，長度不能整除4時做zero padding
     pad_width = width * 3
     padding_num = 1
     while pad_width % 4 != 0:

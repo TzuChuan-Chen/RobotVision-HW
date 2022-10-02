@@ -4,6 +4,7 @@ from bmp_reader import GetBMPData
 
 def image_create(color = 'error', bmp_name = 'output/test.bmp',):
     
+    #改變BGR的值產生不同顏色的image_data，可產生藍、綠、紅、黃、灰、顏色inverse
     if color == 'blue':
         f = open(bmp_name, 'wb')
         f.write(file_header)
