@@ -88,3 +88,5 @@ if __name__ == "__main__":
 
     print('File Size:', len(GetBMPData('testgray.bmp').bmp_data))
     #print(GetBMPData("output/combine.bmp").image_data.hex(' '))
+
+    
