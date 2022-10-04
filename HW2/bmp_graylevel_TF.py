@@ -1,8 +1,8 @@
 #  HW2 BMP格式圖檔調整亮度與直方圖等化
 
 from math import log
-from bmp_reader import GetBMPData # 自己寫的bmp reader
 import matplotlib.pyplot as plt
+from bmp_reader import GetBMPData # 自己寫的bmp reader
 
 def normalization(data, max_range):
 
@@ -101,6 +101,8 @@ def image_create(transformation = 'error', bmp_name = 'output/test.bmp', constan
         print('error')
         
 if __name__ == "__main__":
+
+    # 要使用不同原圖檔都要宣告不同的file_header info_header image_rgb image_data
     log_bmp = GetBMPData('logarithm.bmp')
     file_header = log_bmp.file_header
     info_header = log_bmp.info_header
@@ -116,9 +118,9 @@ if __name__ == "__main__":
     image_data = power_law_bmp.image_data
     image_create("power law","output/powerlaw.bmp", 1, 5)
 
-    power_law_bmp = GetBMPData('HistogramEQ.bmp')
-    file_header = power_law_bmp.file_header
-    info_header = power_law_bmp.info_header
-    image_rgb = power_law_bmp.rgb_quad
-    image_data = power_law_bmp.image_data
+    hist_eq_bmp = GetBMPData('HistogramEQ.bmp')
+    file_header = hist_eq_bmp.file_header
+    info_header = hist_eq_bmp.info_header
+    image_rgb = hist_eq_bmp.rgb_quad
+    image_data = hist_eq_bmp.image_data
     image_create("histogram equalization","output/histogram_equalization.bmp") 
