@@ -1,6 +1,5 @@
 #  HW2 BMP格式圖檔調整亮度與直方圖等化
 
-from cProfile import label
 from math import log
 import matplotlib.pyplot as plt
 from bmp_reader import GetBMPData # 自己寫的bmp reader
