@@ -1,18 +1,19 @@
-#HW1 read bitmap image data
+#  HW1 read bitmap image data
 
+#  用來讀取BMP檔案的所有資訊如: file_header info_header rgb_quad image_data
 class GetBMPData:
     def __init__(self, file_name):
 
-        #讀取整個bmp file的raw data存到self.bmp_data
+        # 讀取整個bmp file的raw data存到self.bmp_data
         self.file_name = file_name
         f = open(self.file_name, "rb")
         self.bmp_data = f.read()
         f.close()
 
-        #讀取header的offbytes當作image data的開始index
+        # 讀取header的offbytes當作image data的開始index
         self.offbytes = int.from_bytes(self.bmp_data[11:9:-1], 'big')
         
-        #依序存取fileheader infoheader rgbquad imagedata
+        # 依序存取fileheader infoheader rgbquad imagedata
         self.file_header = self.bmp_data[:14]
         self.info_header = self.bmp_data[14:54]
         self.rgb_quad = self.bmp_data[54:self.offbytes]
@@ -45,7 +46,7 @@ class GetBMPData:
                   biClrImportant, infoheaderlen
         """
 
-        #用.hex()方便閱讀
+        # 用.hex()方便閱讀
         biSize = self.info_header.hex()[0:8]
         biWidth = self.info_header.hex()[8:16]
         biHeight = self.info_header.hex()[16:24]
@@ -64,19 +65,17 @@ class GetBMPData:
                    'biXPelsPerMeter' : biXPelsPerMeter, 'biYPelsPerMeter' : biYPelsPerMeter, 'biClrUsed' : biClrUsed, 
                    'biClrImportant' : biClrImportant, 'infoheaderlen' : infoheaderlen}
 
-        #print(tag, 'bytes: ', tagdict[tag])
         return tagdict[tag]
 
 
 if __name__ == "__main__":
 
+    '''
     print('')
     print('>>>BITMAPFILEHEADER<<<')
     fileheader_taglist = ['bfType', 'bfSize', 'bfOffbytes']
     for i in fileheader_taglist:
         print(i + 'bytes: ' + GetBMPData('testgray.bmp').fileheader(i))
-
-
 
     print('')
     print('>>>BITMAPINFO<<<')
@@ -87,6 +86,5 @@ if __name__ == "__main__":
         print(i + 'bytes: ' + GetBMPData('testgray.bmp').infoheader(i))
 
     print('File Size:', len(GetBMPData('testgray.bmp').bmp_data))
-    #print(GetBMPData("output/combine.bmp").image_data.hex(' '))
-
+    '''
     
