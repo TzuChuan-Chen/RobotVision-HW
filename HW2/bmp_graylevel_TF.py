@@ -1,5 +1,6 @@
 #  HW2 BMP格式圖檔調整亮度與直方圖等化
 
+from cProfile import label
 from math import log
 import matplotlib.pyplot as plt
 from bmp_reader import GetBMPData # 自己寫的bmp reader
@@ -59,20 +60,17 @@ def image_create(transformation = 'error', bmp_name = 'output/test.bmp', constan
         f.write(image_rgb)
         
         # Histogram 計算
-        histogram = [0] * 256
+        histogram = [0] * 255
         for pixel in image_data:
             histogram[pixel] += 1
-        # plt.hist(histogram, bins='auto')
-        # plt.show()
 
         # Histogram Equalization 計算cumulative sum
         a = iter(histogram)
         cum_sum = [next(a)]
         for i in a:
             cum_sum.append(cum_sum[-1] + i)
+
         cum_sum = normalization(cum_sum, 255)
-        # plt.plot(cum_sum)
-        # plt.show()
 
         # 將image_data[j]當作cum_sum的index(都需四捨五入)
         for j in range(len(image_data)):
@@ -124,3 +122,27 @@ if __name__ == "__main__":
     image_rgb = hist_eq_bmp.rgb_quad
     image_data = hist_eq_bmp.image_data
     image_create("histogram equalization","output/histogram_equalization.bmp") 
+
+
+
+
+    dict = {}
+    for k in image_data:
+        dict[k] = dict.get(k, 0) + 1
+    plt.xlim([0, 255])
+    plt.bar(list(dict.keys()), list(dict.values()), 0.9, label='Origin')
+    
+
+    hist2_eq_bmp = GetBMPData('output/histogram_equalization.bmp')
+    image_data = hist2_eq_bmp.image_data
+
+    dict = {}
+    for k in image_data:
+        dict[k] = dict.get(k, 0) + 1
+
+    plt.bar(list(dict.keys()), list(dict.values()), 0.9, label='Equalization')
+
+    plt.title('Histogram of image')
+    plt.xlabel('Gray Level')
+    plt.legend(loc='upper left')
+    plt.show()
