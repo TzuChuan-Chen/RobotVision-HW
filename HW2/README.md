@@ -1,7 +1,8 @@
 HW2 BMP 格式圖檔調整亮度與直方圖等化
 ==================================
 
-* bmp_graylevel_TF.py >> 以HW1的bmp_rgbquad.py來修改可以做簡單的Gray Level Transformations結果輸出在output資料夾
+* bmp_graylevel_TF.py >> 以HW1的bmp_rgbquad.py來修改可以做簡單的
+Gray Level Transformations結果輸出在output資料夾
 * bmp_reader.py >> 延續HW1用來讀取BMP的資料
 
 1. Image negatives (additional)
