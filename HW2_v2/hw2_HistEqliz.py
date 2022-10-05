@@ -31,7 +31,8 @@ def image_create(transformation = 'error', bmp_name = 'output/test.bmp'):
         for n in histogram:
             cdf += n / len(image_data) # 累積分布cdf
             cum_sum.append(round(cdf * 255)) 
-        # plt.plot(cum_sum) # plot cdf
+        # plt.title('Cumulative Distribution') # plotp Cumulative Distribution
+        # plt.plot(cum_sum) 
         # plt.show()
 
         # 將image_data[j]當作cum_sum的index mapping回去原圖

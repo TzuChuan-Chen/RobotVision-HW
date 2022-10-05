@@ -7,7 +7,7 @@ HW2 BMP 格式圖檔調整亮度與直方圖等化(分成3個檔案的版本)
 * hw2_PowerLawT.py >> 直方圖等化
 * 輸出結果都在output資料夾(如果沒有須自行創建)
 
-1. Log transformation
+1. Log transformation (C=1)
 ```python
 if __name__ == "__main__":
     # 取得logarithm.bmp的資料
@@ -18,7 +18,7 @@ if __name__ == "__main__":
     image_data = log_bmp.image_data
     image_create("log", "output/log.bmp", 1)
 ```
-2. Power-Law transformation
+2. Power-Law transformation (C=1, gamma=5)
 ```python
 if __name__ == "__main__":
     # 取得power_law.bmp的資料
