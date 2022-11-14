@@ -54,7 +54,7 @@ if __name__ == "__main__":
     info_header = hist_eq_bmp.info_header
     image_rgb = hist_eq_bmp.rgb_quad
     image_data = hist_eq_bmp.image_data
-    output_image_data = image_create("histogram equalization","output/hist_eqliz.bmp") 
+    output_image_data = image_create("histogram equalization", "output/hist_eqliz.bmp")
 
     # # plot出原圖的直方圖跟Equalization後的直方圖
     # ori_dict = {}
