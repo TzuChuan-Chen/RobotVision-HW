@@ -1,24 +1,8 @@
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
-from PIL import Image
 import glob
 from scipy.signal import find_peaks
-
-
-def find_range(f, x):
-    """
-    Find range between nearest local minima from peak at index x
-    """
-    for i in range(x+1, len(f)):
-        if f[i+1] >= f[i]:
-            uppermin = i
-            break
-    for i in range(x-1, 0, -1):
-        if f[i] <= f[i-1]:
-            lowermin = i + 1
-            break
-    return (lowermin, uppermin)
 
 
 if __name__ == '__main__':
@@ -30,63 +14,61 @@ if __name__ == '__main__':
         my_img.append(cv2.imread(title, cv2.IMREAD_GRAYSCALE))
     # print(my_img)
 
-    img = my_img[9]
+    img = my_img[8]
+    gray_img = np.copy(img)
 
-    # np.set_printoptions(threshold=np.inf)
+    # 使用 sobel 算子
+    # 第一個參數是要作用的影像
+    # 第二個參數是影像深度 使用 16 可避免 overflow 問題
+    # 第三 & 四個參數是控制是否使用兩種面罩的參數
+    # 第五個參數是 mask size
+    kernel_size = 3
+    # x = cv2.Sobel(gray_img, cv2.CV_16S, 1, 0, ksize=kernel_size)
+    y = cv2.Sobel(gray_img, cv2.CV_16S, 0, 1, ksize=kernel_size)
 
-    # img = img[800:, :]
-
-    # print(img.shape)
-
-    img = cv2.medianBlur(img, 9)
-
-    contrast = 1
-    brightness = 0
+    # 轉換為影像原本儲存的格式 uint8
+    # absX = cv2.convertScaleAbs(x)
+    dst = cv2.convertScaleAbs(y)
 
     image_copy = img.copy()
-    vt_ref = img[:, 500]
 
-    # kernel = np.ones((15, 15), np.uint8)
-    # img = cv2.dilate(img, kernel, iterations=10)
-    #img = img * (img / 127 + 1) - img + brightness  # 轉換公式
-    #img = ((img-np.min(img)) * 255) / (np.max(img)-np.min(img))
-    print(img[:500])
-    # img = np.where(img < 200, img, 255)
-    # img = np.where(img < 100, img, 0)
-    #img = img.astype(np.uint8)
-    #print(vt_ref)
-
+    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (9, 9))
+    closing = cv2.morphologyEx(dst, cv2.MORPH_CLOSE, kernel, iterations=10)
     # diff = np.diff(vt_sp)
     # print(diff)
     # print(np.where(diff > 50))
-
+    vt_ref = closing[:, 700]
     vt_head = vt_ref[:1000]
-    vt_tail = vt_ref[700:-1]
-
+    vt_tail = vt_ref[1200:]
+    print(len(vt_tail))
     # print(np.where(vt_tail < 20))
-    start_idx = np.where(vt_head < 255)
-    #print(start_idx)
-    # end = np.where(vt_tail > 50)
-    end = np.where(vt_tail < 35)[0][-1]
-    roi_img = image_copy[:, :]
-    vt_1 = roi_img[:, 200]
-    vt_2 = roi_img[:, 500]
-    vt_3 = roi_img[:, 800]
-    # print(vt)
+    start_idx = np.where(vt_head > 100)[0][0]
 
-    # vt = np.clip(vt, 30, 100)
+    end = np.where(vt_tail < 40)[0][0]
+    print(np.where(vt_tail < 50))
+    # end = np.where(vt_tail < 35)[0][-1]
+    roi_img = image_copy[start_idx:end+1200, :]
+    vt_1 = roi_img[:, 50]
+    vt_2 = roi_img[:, 200]
+    vt_3 = roi_img[:, 500]
+    vt_4 = roi_img[:, 800]
+    vt_5 = roi_img[:, 950]
 
-    cv2.imshow("windows", img)
+    cv2.imshow("windows", closing)
     cv2.waitKey(0)
     cv2.imwrite('output.png', roi_img)
     cv2.destroyAllWindows()
 
-    peaks1, _ = find_peaks(vt_1, distance=20)
-    peaks2, _ = find_peaks(vt_2, distance=20)
-    peaks3, _ = find_peaks(vt_3, distance=20)
-    print(len(peaks1))
-    print(len(peaks2))
-    print(len(peaks3))
+    peaks1, _ = find_peaks(vt_1, distance=25, height=20)
+    peaks2, _ = find_peaks(vt_2, distance=25, height=20)
+    peaks3, _ = find_peaks(vt_3, distance=25, height=20)
+    peaks4, _ = find_peaks(vt_4, distance=25, height=20)
+    peaks5, _ = find_peaks(vt_5, distance=25, height=20)
+    peak_list = [len(peaks1), len(peaks2), len(peaks3), len(peaks4), len(peaks5)]
+
+    print(peak_list)
+
+    print(np.argmax(np.bincount(peak_list)))
     plt.plot(peaks1, vt_1[peaks1], "x")
     plt.plot(np.zeros_like(vt_1), "--", color="gray")
     pimg = plt.imread('output.png')
@@ -95,9 +77,3 @@ if __name__ == '__main__':
     plt.plot(vt_1)
 
     plt.show()
-
-
-
-
-
-
