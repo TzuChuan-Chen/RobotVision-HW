@@ -3,11 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.signal import find_peaks
 
-
-
-
 if __name__ == '__main__':
-    #cv2.namedWindow('windows', cv2.WINDOW_NORMAL)
+    # cv2.namedWindow('windows', cv2.WINDOW_NORMAL)
 
     img = cv2.imread('HW_Image/20070907_170041_Cell_114.png', cv2.IMREAD_GRAYSCALE)
     gray_img = np.copy(img)
@@ -39,21 +36,33 @@ if __name__ == '__main__':
     plt.show()
 
     myl_top = np.zeros(1000, dtype=int)
+    diff_top = np.zeros(1000, dtype=int)
     for i in range(1000):
         ls = vt_head[i:i+5]
+        # print(np.diff(ls, n=4))
+        diff_top[i] = np.diff(ls, n=4)
         myl_top[i] = np.min(ls)
+    # print(np.where(diff_top > 250)[0][0])
+    # print(diff_top)
+    # print(np.where(myl_top < 60)[0][0])
+    start_idx = np.where(diff_top > 250)[0][0]
 
-    # print(np.where(myl < 60)[0][0])
-    start_idx = np.where(myl_top < 60)[0][0]
+    myl_botton = np.zeros(6000, dtype=int)
+    mean_bot = np.zeros(10001, dtype=int)
+    for i in range(10000, start_idx, -1):
+        ls2 = vt_head[i:i-5:-1]
+        # myl_botton[i] = np.min(ls2)
+        mean_bot[i] = np.sum(ls2)
+        if mean_bot[i] > 250:
+            print(mean_bot[i], i)
+            # if i
 
-    myl_botton = np.zeros(5000, dtype=int)
-    for i in range(5000):
-        ls2 = vt_head[start_idx+i:start_idx+i+5]
-        myl_botton[i] = np.min(ls2)
-        #print(ls2)
-    print(myl_botton[2900:3000])
-    print(np.where(myl_botton < 20)[0][0])
-    end_idx = np.where(myl_botton < 20)[0][0]
+        # print(ls2)
+    #print(mean_bot[4870:4890])
+    #print(np.where(diff_bot<90))
+    # print(myl_botton[2900:3000])
+    # print(np.where(myl_botton < 20)[0][0])
+    end_idx = np.where(mean_bot < 250)[0][0]
 
     # print(vt_ref)
     # # print(np.where(vt_tail < 20))
