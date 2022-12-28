@@ -1,14 +1,25 @@
 import glob
 import numpy as np
 import cv2
-import pylab as pl
+import time 
 
+def NCC(image1, image2):
+
+    image1_array = np.array(image1)
+    image2_array = np.array(image2)
+    # Flatten the arrays to 1D arrays of pixel values
+    image1_pixels = image1_array.flatten()
+    image2_pixels = image2_array.flatten()
+    norm_corr_coeff = np.corrcoef(image1_pixels, image2_pixels)[0, 1] / (np.std(image1_pixels) * np.std(image2_pixels))
+    print(norm_corr_coeff)
+    return norm_corr_coeff
 # ------------------ Normalised Cross Correlation ------------------ #
 def Normalised_Cross_Correlation(roi, target):
     # Normalised Cross Correlation Equation
     cor = np.sum(roi * target)
     nor = np.sqrt( (np.sum(roi ** 2))) * np.sqrt(np.sum(target ** 2))
-
+    print(cor / nor)
+    
     return cor / nor
 
 # ----------------------- template matching ----------------------- #
@@ -16,8 +27,7 @@ def template_matching(img, target):
     # initial parameter
     height, width, _ = img.shape
     tar_height, tar_width, _ = target.shape
-    print(tar_height, tar_width)
-    print(height, width)
+
     (max_Y, max_X) = (0, 0)
     MaxValue = 0
 
@@ -49,17 +59,21 @@ if __name__ == '__main__':
 
     pattern_path = glob.glob(r'./pattern/*') 
     image = cv2.imread(circle_path[0])
-    target = cv2.imread(pattern_path[1])
+    target = cv2.imread(pattern_path[2])
     
     height, width, _ = target.shape
 
+
+
+    start = time.time()
     # function
     top_left = template_matching(image, target)
     # draw rectangle on the result region
-    cv2.rectangle(image, top_left, (top_left[0] + width, top_left[1] + height), 0, 3)
+    cv2.rectangle(image, top_left, (top_left[0] + width, top_left[1] + height), (0,0,255), 2)
 
-    # show result
-    pl.subplot(111)
-    pl.imshow(image)
-    pl.title('result')
-    pl.show()
+    end = time.time()
+
+    print("執行時間：%f 秒" % (end - start))
+    cv2.imshow('Template_cross Matching', image)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
