@@ -1,19 +1,30 @@
-import cv2
+import numpy as np
+import matplotlib.image as img
 import matplotlib.pyplot as plt
-  
-img = cv2.imread("circle\Panel1_circle1.bmp")
-  
-layer = img.copy()
-  
-for i in range(4):
-    plt.subplot(2, 2, i + 1)
-  
-    # using pyrDown() function
-    layer = cv2.pyrDown(layer)
-  
-    plt.imshow(layer)
-    cv2.imshow("str(i)", layer)
-    cv2.waitKey(0)
-      
-  
-cv2.destroyAllWindows()
+from skimage.metrics import structural_similarity as ssim
+
+def rgb2gray(rgb):
+    return np.dot(rgb[...,:3], [0.299, 0.587, 0.144])
+
+full_image = rgb2gray(img.imread("circle/Panel1_circle1.bmp"))
+sub_image = rgb2gray(img.imread("pattern/Template_BorderCircle.bmp"))
+
+full_w,full_h = full_image.shape[:2]
+sub_w,sub_h = sub_image.shape[:2]
+
+print(full_w,full_h)
+print(sub_w,sub_h)
+
+winW = 0
+found = False
+while winW < full_w - sub_w and found == False:
+    winH = 0
+    while winH < full_h - sub_h:
+        window = full_image[winW:winW+sub_w, winH:winH+sub_h]
+        if ssim(sub_image, window) > 0.80:
+            found = True
+            print("found", ssim(sub_image, window))
+            plt.imshow(window)
+            break
+        winH += 2
+    winW += 2
